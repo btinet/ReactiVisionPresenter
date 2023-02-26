@@ -189,14 +189,13 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 				transform.translate(ox,oy);
 
 				JLabel text = new JLabel(String.valueOf(tobj.getSymbolID())+" ID");
-				System.out.println("Text aktualisiert für: "+tobj.getSymbolID());
 
 
 				try {
-					String destination = "https://www.vapita.de/uploads/"+tobj.getSymbolID()+".png";
+					String destination = "https://www.vapita.de/uploads/"+tobj.getSymbolID()+".jpg";
 					URL url = new URL(destination);
 					BufferedImage c = ImageIO.read(url);
-					g2.drawImage(c,Math.round(tobj.getX()*getWidth())-(getWidth()/2),Math.round(tobj.getY()*getHeight()), this);
+					g2.drawImage(c,Math.round(tobj.getX()*getWidth())-(c.getWidth()/2),Math.round(tobj.getY()*getHeight())-(c.getHeight()/2), this);
 				} catch (IOException e) {
 					System.err.println("Bild existiert nicht.");
 				}
