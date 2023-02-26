@@ -26,9 +26,14 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import TUIO.*;
+
 
 public class TuioDemoComponent extends JComponent implements TuioListener {
 
@@ -44,7 +49,7 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 	private float scale = 1.0f;
 	public boolean verbose = false;
 	
-	Color bgrColor = new Color(0,0,64);
+	Color bgrColor = new Color(255,255,255);
 	Color curColor = new Color(192,0,192);
 	Color objColor = new Color(64,0,0);
 	Color blbColor = new Color(64,64,64);
@@ -58,6 +63,10 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 	
 	public void addTuioObject(TuioObject tobj) {
 		objectList.put(tobj.getSessionID(),tobj);
+
+
+		System.out.println("Seite "+tobj.getSymbolID()+" aufrufen.");
+
 
 		if (verbose) 
 			System.out.println("add obj "+tobj.getSymbolID()+" ("+tobj.getSessionID()+") "+tobj.getX()+" "+tobj.getY()+" "+tobj.getAngle());	
@@ -132,7 +141,7 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-	
+
 		g2.setColor(bgrColor);
 		g2.fillRect(0,0,width,height);
 	
@@ -174,15 +183,31 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 				float size = object_size*(height/(float)table_size);
 						
 				Rectangle2D square = new Rectangle2D.Float(-size/2,-size/2,size,size);
-		
+
 				AffineTransform transform = new AffineTransform();
 				transform.rotate(tobj.getAngle(),ox,oy);
 				transform.translate(ox,oy);
 
-				g2.setPaint(objColor);
-				g2.fill(transform.createTransformedShape(square));
-				g2.setPaint(Color.white);
-				g2.drawString(tobj.getSymbolID()+"",ox-10,oy);
+				JLabel text = new JLabel(String.valueOf(tobj.getSymbolID())+" ID");
+				System.out.println("Text aktualisiert für: "+tobj.getSymbolID());
+
+
+				try {
+					URL img = this.getClass().getClassLoader().getResource("images/"+tobj.getSymbolID()+".png");
+					if(img != null){
+						g2.drawImage(ImageIO.read(img),Math.round(tobj.getX()*getWidth())-400,Math.round(tobj.getY()*getHeight()), this);
+					} else {
+						System.err.println("Bild existiert nicht.");
+					}
+				} catch (IOException e) {
+					System.err.println("Bild existiert nicht.");
+				}
+
+				//g2.setPaint(objColor);
+				//g2.fill(transform.createTransformedShape(square));
+				//g2.setPaint(objColor);
+				//g2.drawString("Seite "+tobj.getSymbolID()+"",ox-10,oy);
+
 			}
 		}
 		

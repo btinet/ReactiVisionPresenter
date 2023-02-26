@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="ReactiVisionPresenter:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ReactiVisionPresenter_jar</output-path>
+    <root id="root">
+      <element id="archive" name="ReactiVisionPresenter.jar">
+        <element id="module-output" name="ReactiVisionPresenter" />
+      </element>
+    </root>
+  </artifact>
+</component>

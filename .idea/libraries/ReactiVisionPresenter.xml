@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="ReactiVisionPresenter">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/TuioDemo.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libTUIO.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
