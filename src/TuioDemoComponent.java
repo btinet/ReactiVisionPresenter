@@ -196,7 +196,7 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 					String destination = "https://www.vapita.de/uploads/"+tobj.getSymbolID()+".png";
 					URL url = new URL(destination);
 					BufferedImage c = ImageIO.read(url);
-					g2.drawImage(c,Math.round(tobj.getX()*getWidth())-400,Math.round(tobj.getY()*getHeight()), this);
+					g2.drawImage(c,Math.round(tobj.getX()*getWidth())-(getWidth()/2),Math.round(tobj.getY()*getHeight()), this);
 				} catch (IOException e) {
 					System.err.println("Bild existiert nicht.");
 				}
