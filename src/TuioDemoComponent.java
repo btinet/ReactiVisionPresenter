@@ -49,7 +49,7 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 	private float scale = 1.0f;
 	public boolean verbose = false;
 	
-	Color bgrColor = new Color(255,255,255);
+	Color bgrColor = new Color(54,54,54);
 	Color curColor = new Color(192,0,192);
 	Color objColor = new Color(64,0,0);
 	Color blbColor = new Color(64,64,64);
@@ -142,8 +142,11 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
+
 		g2.setColor(bgrColor);
 		g2.fillRect(0,0,width,height);
+		g2.setColor(Color.white);
+		g2.drawString("KollegVision Presenter v0.1 - ©2023 Benjamin Wagner",15,25);
 	
 		int w = (int)Math.round(width-scale*finger_size/2.0f);
 		int h = (int)Math.round(height-scale*finger_size/2.0f);
