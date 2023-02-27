@@ -28,6 +28,7 @@ import java.awt.event.*;
 import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import javax.imageio.ImageIO;
@@ -146,8 +147,15 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 		g2.setColor(bgrColor);
 		g2.fillRect(0,0,width,height);
 		g2.setColor(Color.white);
-		g2.drawString("KollegVision Presenter v0.1 - ©2023 Benjamin Wagner",15,25);
-	
+		g2.drawString("KollegVision Presenter (ver. 0.1)",93,42);
+		g2.drawString("©2023 - Benjamin Wagner",93,62);
+
+		String logo = "/images/tk.png";
+		URL logoUrl = getClass().getResource(logo);
+		Image image = getToolkit().getImage(logoUrl);
+		g2.drawImage(image,18,25, this);
+
+
 		int w = (int)Math.round(width-scale*finger_size/2.0f);
 		int h = (int)Math.round(height-scale*finger_size/2.0f);
 		
