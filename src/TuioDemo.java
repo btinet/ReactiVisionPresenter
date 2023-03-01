@@ -35,7 +35,7 @@ public class TuioDemo  {
 	private final int window_width  = 1280;
 	private final int window_height = 720;
 
-	private boolean fullscreen = true;
+	private boolean fullscreen = false;
 	
 	private TuioDemoComponent demo;
 	private JFrame frame;

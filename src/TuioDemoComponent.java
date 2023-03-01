@@ -34,6 +34,7 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import TUIO.*;
+import sun.awt.image.SunWritableRaster;
 
 
 public class TuioDemoComponent extends JComponent implements TuioListener {
@@ -203,10 +204,15 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 
 
 				try {
-					String destination = "https://www.vapita.de/uploads/"+tobj.getSymbolID()+".jpg";
+					String destination = "file:///C:/kollegvision/"+tobj.getSymbolID()+".jpg";
 					URL url = new URL(destination);
 					BufferedImage c = ImageIO.read(url);
-					g2.drawImage(c,Math.round(tobj.getX()*getWidth())-(c.getWidth()/2),Math.round(tobj.getY()*getHeight())-(c.getHeight()/2), this);
+
+					AffineTransform tx = AffineTransform.getRotateInstance(tobj.getAngle(), tobj.getX(), tobj.getY());
+					AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+
+					g2.drawImage(c,Math.round(tobj.getX()*getWidth())-(c.getWidth()/2),Math.round(tobj.getY()*getHeight())-(c.getHeight()/2),null, this);
+
 				} catch (IOException e) {
 					System.err.println("Bild existiert nicht.");
 				}
