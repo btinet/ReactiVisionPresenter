@@ -203,6 +203,7 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 				JLabel text = new JLabel(String.valueOf(tobj.getSymbolID())+" ID");
 
 
+
 				try {
 					String destination = "file:///C:/kollegvision/"+tobj.getSymbolID()+".jpg";
 					URL url = new URL(destination);
@@ -217,10 +218,27 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 					System.err.println("Bild existiert nicht.");
 				}
 
-				//g2.setPaint(objColor);
-				//g2.fill(transform.createTransformedShape(square));
-				//g2.setPaint(objColor);
-				//g2.drawString("Seite "+tobj.getSymbolID()+"",ox-10,oy);
+				/*
+				g2.setPaint(objColor);
+				g2.fill(transform.createTransformedShape(square));
+				*/
+				g2.setPaint(Color.white);
+
+
+				if(tobj.getAngleDegrees() > 270){
+					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite D");
+					g2.drawString("Seite "+tobj.getSymbolID()+"-D",ox-10,25);
+				} else if (tobj.getAngleDegrees() > 180) {
+					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite C");
+					g2.drawString("Seite "+tobj.getSymbolID()+"-C",ox-10,25);
+				} else if (tobj.getAngleDegrees() > 90) {
+					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite B");
+					g2.drawString("Seite "+tobj.getSymbolID()+"-B",ox-10,25);
+				} else if (tobj.getAngleDegrees() <= 90) {
+					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite A");
+					g2.drawString("Seite "+tobj.getSymbolID()+"-A",ox-10,25);
+				}
+
 
 			}
 		}
