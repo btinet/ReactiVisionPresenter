@@ -53,7 +53,7 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 	
 	Color bgrColor = new Color(54,54,54);
 	Color curColor = new Color(192,0,192);
-	Color objColor = new Color(64,0,0);
+	Color objColor = new Color(0,159,227);
 	Color blbColor = new Color(64,64,64);
 		
 	public void setSize(int w, int h) {
@@ -196,9 +196,16 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 						
 				Rectangle2D square = new Rectangle2D.Float(-size/2,-size/2,size,size);
 
+				Rectangle2D aStripe = new Rectangle2D.Float(tobj.getX(),0,50,10);
+				Rectangle2D bStripe = new Rectangle2D.Float(tobj.getX()+52,0,50,10);
+				Rectangle2D cStripe = new Rectangle2D.Float(tobj.getX()+104,0,50,10);
+				Rectangle2D dStripe = new Rectangle2D.Float(tobj.getX()+156,0,50,10);
+
 				AffineTransform transform = new AffineTransform();
 				transform.rotate(tobj.getAngle(),ox,oy);
 				transform.translate(ox,oy);
+				AffineTransform txStripe = new AffineTransform();
+				txStripe.translate(ox+20,16);
 
 				JLabel text = new JLabel(String.valueOf(tobj.getSymbolID())+" ID");
 
@@ -210,6 +217,7 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 					BufferedImage c = ImageIO.read(url);
 
 					AffineTransform tx = AffineTransform.getRotateInstance(tobj.getAngle(), tobj.getX(), tobj.getY());
+
 					AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 
 					g2.drawImage(c,Math.round(tobj.getX()*getWidth())-(c.getWidth()/2),Math.round(tobj.getY()*getHeight())-(c.getHeight()/2),null, this);
@@ -225,18 +233,47 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 				g2.setPaint(Color.white);
 
 
-				if(tobj.getAngleDegrees() > 270){
+				if(tobj.getAngleDegrees() <= 315 && tobj.getAngleDegrees() > 225){
 					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite D");
-					g2.drawString("Seite "+tobj.getSymbolID()+"-D",ox-10,25);
-				} else if (tobj.getAngleDegrees() > 180) {
+					g2.drawString(tobj.getSymbolID()+"-D",ox-10,25);
+					g2.setPaint(objColor);
+					g2.fill(txStripe.createTransformedShape(aStripe));
+					g2.fill(txStripe.createTransformedShape(bStripe));
+					g2.fill(txStripe.createTransformedShape(cStripe));
+					g2.fill(txStripe.createTransformedShape(dStripe));
+				}
+
+				if (tobj.getAngleDegrees() <= 225 && tobj.getAngleDegrees() > 135) {
 					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite C");
-					g2.drawString("Seite "+tobj.getSymbolID()+"-C",ox-10,25);
-				} else if (tobj.getAngleDegrees() > 90) {
+					g2.drawString(tobj.getSymbolID()+"-C",ox-10,25);
+					g2.setPaint(objColor);
+					g2.fill(txStripe.createTransformedShape(aStripe));
+					g2.fill(txStripe.createTransformedShape(bStripe));
+					g2.fill(txStripe.createTransformedShape(cStripe));
+					g2.setPaint(Color.darkGray);
+					g2.fill(txStripe.createTransformedShape(dStripe));
+				}
+
+				if (tobj.getAngleDegrees() <= 135 && tobj.getAngleDegrees() > 45) {
 					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite B");
-					g2.drawString("Seite "+tobj.getSymbolID()+"-B",ox-10,25);
-				} else if (tobj.getAngleDegrees() <= 90) {
+					g2.drawString(tobj.getSymbolID()+"-B",ox-10,25);
+					g2.setPaint(objColor);
+					g2.fill(txStripe.createTransformedShape(aStripe));
+					g2.fill(txStripe.createTransformedShape(bStripe));
+					g2.setPaint(Color.darkGray);
+					g2.fill(txStripe.createTransformedShape(cStripe));
+					g2.fill(txStripe.createTransformedShape(dStripe));
+				}
+
+				if (tobj.getAngleDegrees() <= 45 || tobj.getAngleDegrees() > 315) {
 					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite A");
-					g2.drawString("Seite "+tobj.getSymbolID()+"-A",ox-10,25);
+					g2.drawString(tobj.getSymbolID()+"-A",ox-10,25);
+					g2.setPaint(objColor);
+					g2.fill(txStripe.createTransformedShape(aStripe));
+					g2.setPaint(Color.darkGray);
+					g2.fill(txStripe.createTransformedShape(bStripe));
+					g2.fill(txStripe.createTransformedShape(cStripe));
+					g2.fill(txStripe.createTransformedShape(dStripe));
 				}
 
 
