@@ -51,7 +51,7 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 	private float scale = 1.0f;
 	public boolean verbose = false;
 	
-	Color bgrColor = new Color(54,54,54);
+	Color bgrColor = new Color(0,0,0);
 	Color curColor = new Color(192,0,192);
 	Color objColor = new Color(0,159,227);
 	Color blbColor = new Color(64,64,64);
@@ -211,8 +211,68 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 
 
 
+
+
+				/*
+				g2.setPaint(objColor);
+				g2.fill(transform.createTransformedShape(square));
+				*/
+				g2.setPaint(Color.white);
+
+				StringBuilder imgName = new StringBuilder();
+				imgName.append(tobj.getSymbolID());
+				imgName.append("_");
+
+
+				if(tobj.getAngleDegrees() <= 315 && tobj.getAngleDegrees() > 225){
+					imgName.append("d");
+					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite D");
+					g2.drawString(tobj.getSymbolID()+"-D",ox-10,25);
+					g2.setPaint(objColor);
+					g2.fill(txStripe.createTransformedShape(aStripe));
+					g2.fill(txStripe.createTransformedShape(bStripe));
+					g2.fill(txStripe.createTransformedShape(cStripe));
+					g2.fill(txStripe.createTransformedShape(dStripe));
+				}
+
+				if (tobj.getAngleDegrees() <= 225 && tobj.getAngleDegrees() > 135) {
+					imgName.append("c");
+					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite C");
+					g2.drawString(tobj.getSymbolID()+"-C",ox-10,25);
+					g2.setPaint(objColor);
+					g2.fill(txStripe.createTransformedShape(aStripe));
+					g2.fill(txStripe.createTransformedShape(bStripe));
+					g2.fill(txStripe.createTransformedShape(cStripe));
+					g2.setPaint(Color.darkGray);
+					g2.fill(txStripe.createTransformedShape(dStripe));
+				}
+
+				if (tobj.getAngleDegrees() <= 135 && tobj.getAngleDegrees() > 45) {
+					imgName.append("b");
+					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite B");
+					g2.drawString(tobj.getSymbolID()+"-B",ox-10,25);
+					g2.setPaint(objColor);
+					g2.fill(txStripe.createTransformedShape(aStripe));
+					g2.fill(txStripe.createTransformedShape(bStripe));
+					g2.setPaint(Color.darkGray);
+					g2.fill(txStripe.createTransformedShape(cStripe));
+					g2.fill(txStripe.createTransformedShape(dStripe));
+				}
+
+				if (tobj.getAngleDegrees() <= 45 || tobj.getAngleDegrees() > 315) {
+					imgName.append("a");
+					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite A");
+					g2.drawString(tobj.getSymbolID()+"-A",ox-10,25);
+					g2.setPaint(objColor);
+					g2.fill(txStripe.createTransformedShape(aStripe));
+					g2.setPaint(Color.darkGray);
+					g2.fill(txStripe.createTransformedShape(bStripe));
+					g2.fill(txStripe.createTransformedShape(cStripe));
+					g2.fill(txStripe.createTransformedShape(dStripe));
+				}
+
 				try {
-					String destination = "file:///C:/kollegvision/"+tobj.getSymbolID()+".jpg";
+					String destination = "file:///C:/kollegvision/"+imgName+".jpg";
 					URL url = new URL(destination);
 					BufferedImage c = ImageIO.read(url);
 
@@ -225,57 +285,6 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 				} catch (IOException e) {
 					System.err.println("Bild existiert nicht.");
 				}
-
-				/*
-				g2.setPaint(objColor);
-				g2.fill(transform.createTransformedShape(square));
-				*/
-				g2.setPaint(Color.white);
-
-
-				if(tobj.getAngleDegrees() <= 315 && tobj.getAngleDegrees() > 225){
-					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite D");
-					g2.drawString(tobj.getSymbolID()+"-D",ox-10,25);
-					g2.setPaint(objColor);
-					g2.fill(txStripe.createTransformedShape(aStripe));
-					g2.fill(txStripe.createTransformedShape(bStripe));
-					g2.fill(txStripe.createTransformedShape(cStripe));
-					g2.fill(txStripe.createTransformedShape(dStripe));
-				}
-
-				if (tobj.getAngleDegrees() <= 225 && tobj.getAngleDegrees() > 135) {
-					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite C");
-					g2.drawString(tobj.getSymbolID()+"-C",ox-10,25);
-					g2.setPaint(objColor);
-					g2.fill(txStripe.createTransformedShape(aStripe));
-					g2.fill(txStripe.createTransformedShape(bStripe));
-					g2.fill(txStripe.createTransformedShape(cStripe));
-					g2.setPaint(Color.darkGray);
-					g2.fill(txStripe.createTransformedShape(dStripe));
-				}
-
-				if (tobj.getAngleDegrees() <= 135 && tobj.getAngleDegrees() > 45) {
-					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite B");
-					g2.drawString(tobj.getSymbolID()+"-B",ox-10,25);
-					g2.setPaint(objColor);
-					g2.fill(txStripe.createTransformedShape(aStripe));
-					g2.fill(txStripe.createTransformedShape(bStripe));
-					g2.setPaint(Color.darkGray);
-					g2.fill(txStripe.createTransformedShape(cStripe));
-					g2.fill(txStripe.createTransformedShape(dStripe));
-				}
-
-				if (tobj.getAngleDegrees() <= 45 || tobj.getAngleDegrees() > 315) {
-					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite A");
-					g2.drawString(tobj.getSymbolID()+"-A",ox-10,25);
-					g2.setPaint(objColor);
-					g2.fill(txStripe.createTransformedShape(aStripe));
-					g2.setPaint(Color.darkGray);
-					g2.fill(txStripe.createTransformedShape(bStripe));
-					g2.fill(txStripe.createTransformedShape(cStripe));
-					g2.fill(txStripe.createTransformedShape(dStripe));
-				}
-
 
 			}
 		}
