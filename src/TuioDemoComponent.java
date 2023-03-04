@@ -159,30 +159,10 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 
 		int w = (int)Math.round(width-scale*finger_size/2.0f);
 		int h = (int)Math.round(height-scale*finger_size/2.0f);
+
+
 		
-		Enumeration<TuioCursor> cursors = cursorList.elements();
-		while (cursors.hasMoreElements()) {
-			TuioCursor tcur = cursors.nextElement();
-			if (tcur==null) continue;
-			ArrayList<TuioPoint> path = tcur.getPath();
-			TuioPoint current_point = path.get(0);
-			if (current_point!=null) {
-				// draw the cursor path
-				g2.setPaint(Color.blue);
-				for (int i=0;i<path.size();i++) {
-					TuioPoint next_point = path.get(i);
-					g2.drawLine(current_point.getScreenX(w), current_point.getScreenY(h), next_point.getScreenX(w), next_point.getScreenY(h));
-					current_point = next_point;
-				}
-			}
-			
-			// draw the finger tip
-			g2.setPaint(curColor);
-			int s = (int)(scale*finger_size);
-			g2.fillOval(current_point.getScreenX(w-s/2),current_point.getScreenY(h-s/2),s,s);
-			g2.setPaint(Color.white);
-			g2.drawString(tcur.getCursorID()+"",current_point.getScreenX(w),current_point.getScreenY(h));
-		}
+
 
 		// draw the objects
 		Enumeration<TuioObject> objects = objectList.elements();
@@ -226,7 +206,6 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 
 				if(tobj.getAngleDegrees() <= 315 && tobj.getAngleDegrees() > 225){
 					imgName.append("d");
-					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite D");
 					g2.drawString(tobj.getSymbolID()+"-D",ox-10,25);
 					g2.setPaint(objColor);
 					g2.fill(txStripe.createTransformedShape(aStripe));
@@ -237,7 +216,6 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 
 				if (tobj.getAngleDegrees() <= 225 && tobj.getAngleDegrees() > 135) {
 					imgName.append("c");
-					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite C");
 					g2.drawString(tobj.getSymbolID()+"-C",ox-10,25);
 					g2.setPaint(objColor);
 					g2.fill(txStripe.createTransformedShape(aStripe));
@@ -249,7 +227,6 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 
 				if (tobj.getAngleDegrees() <= 135 && tobj.getAngleDegrees() > 45) {
 					imgName.append("b");
-					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite B");
 					g2.drawString(tobj.getSymbolID()+"-B",ox-10,25);
 					g2.setPaint(objColor);
 					g2.fill(txStripe.createTransformedShape(aStripe));
@@ -261,7 +238,6 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 
 				if (tobj.getAngleDegrees() <= 45 || tobj.getAngleDegrees() > 315) {
 					imgName.append("a");
-					System.out.println("Object "+tobj.getSymbolID()+" zeigt Seite A");
 					g2.drawString(tobj.getSymbolID()+"-A",ox-10,25);
 					g2.setPaint(objColor);
 					g2.fill(txStripe.createTransformedShape(aStripe));
@@ -287,6 +263,45 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 				}
 
 			}
+		}
+
+		Enumeration<TuioCursor> cursors = cursorList.elements();
+		while (cursors.hasMoreElements()) {
+
+			TuioCursor tcur = cursors.nextElement();
+			if (tcur==null) continue;
+
+			Rectangle2D aPoint = new Rectangle2D.Float(tcur.getX(),5*tcur.getCursorID(),100*tcur.getMotionSpeed(),5);
+			Rectangle2D bPoint = new Rectangle2D.Float(tcur.getX(),5*tcur.getCursorID()+5,9*tcur.getMotionAccel(),5);
+			AffineTransform txPoint = new AffineTransform();
+			float ox1 = tcur.getScreenX(width);
+			txPoint.translate((ox1+20),16+(tcur.getCursorID()*5));
+
+			/*
+			g2.setPaint(objColor);
+			g2.fill(txPoint.createTransformedShape(aPoint));
+			g2.setPaint(Color.green);
+			g2.fill(txPoint.createTransformedShape(bPoint));
+			 */
+
+			ArrayList<TuioPoint> path = tcur.getPath();
+			TuioPoint current_point = path.get(0);
+			if (current_point!=null) {
+				// draw the cursor path
+				g2.setPaint(Color.blue);
+				for (int i=0;i<path.size();i++) {
+					TuioPoint next_point = path.get(i);
+
+					current_point = next_point;
+				}
+			}
+
+			// draw the finger tip
+			g2.setPaint(curColor);
+			int s = (int)(scale*finger_size);
+			g2.fillOval(current_point.getScreenX(w-s/2),current_point.getScreenY(h-s/2),s,s);
+			g2.setPaint(Color.white);
+			//g2.drawString(tcur.getCursorID()+"",current_point.getScreenX(w),current_point.getScreenY(h));
 		}
 		
 		// draw the blobs
