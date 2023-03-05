@@ -190,76 +190,99 @@ public class TuioDemoComponent extends JComponent implements TuioListener {
 				JLabel text = new JLabel(String.valueOf(tobj.getSymbolID())+" ID");
 
 
+				if(tobj.getSymbolID() >= 21 && tobj.getSymbolID() < 30)
+				{
+					Rectangle2D aPoint = new Rectangle2D.Float(tobj.getX(),tobj.getY()+60,100*tobj.getMotionSpeed(),10);
+					Rectangle2D bPoint = new Rectangle2D.Float(tobj.getX(),tobj.getY()+70,9*tobj.getMotionAccel(),10);
+					AffineTransform txPoint = new AffineTransform();
+					txPoint.translate(ox,oy);
 
 
-
-				/*
-				g2.setPaint(objColor);
-				g2.fill(transform.createTransformedShape(square));
-				*/
-				g2.setPaint(Color.white);
-
-				StringBuilder imgName = new StringBuilder();
-				imgName.append(tobj.getSymbolID());
-				imgName.append("_");
+			g2.setPaint(objColor);
+			g2.fill(txPoint.createTransformedShape(aPoint));
+			g2.setPaint(Color.green);
+			g2.fill(txPoint.createTransformedShape(bPoint));
 
 
-				if(tobj.getAngleDegrees() <= 315 && tobj.getAngleDegrees() > 225){
-					imgName.append("d");
-					g2.drawString(tobj.getSymbolID()+"-D",ox-10,25);
 					g2.setPaint(objColor);
-					g2.fill(txStripe.createTransformedShape(aStripe));
-					g2.fill(txStripe.createTransformedShape(bStripe));
-					g2.fill(txStripe.createTransformedShape(cStripe));
-					g2.fill(txStripe.createTransformedShape(dStripe));
-				}
+					g2.fill(transform.createTransformedShape(square));
+					g2.drawString("Winkel: "+Math.round(tobj.getAngleDegrees())+"°",ox+50,oy);
+				} else if (tobj.getSymbolID() == 0) {
 
-				if (tobj.getAngleDegrees() <= 225 && tobj.getAngleDegrees() > 135) {
-					imgName.append("c");
-					g2.drawString(tobj.getSymbolID()+"-C",ox-10,25);
-					g2.setPaint(objColor);
-					g2.fill(txStripe.createTransformedShape(aStripe));
-					g2.fill(txStripe.createTransformedShape(bStripe));
-					g2.fill(txStripe.createTransformedShape(cStripe));
-					g2.setPaint(Color.darkGray);
-					g2.fill(txStripe.createTransformedShape(dStripe));
-				}
+					try {
+						String video =  "C:/kollegvision/0.mp4";
+						Desktop.getDesktop().open(new File(video));
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
 
-				if (tobj.getAngleDegrees() <= 135 && tobj.getAngleDegrees() > 45) {
-					imgName.append("b");
-					g2.drawString(tobj.getSymbolID()+"-B",ox-10,25);
-					g2.setPaint(objColor);
-					g2.fill(txStripe.createTransformedShape(aStripe));
-					g2.fill(txStripe.createTransformedShape(bStripe));
-					g2.setPaint(Color.darkGray);
-					g2.fill(txStripe.createTransformedShape(cStripe));
-					g2.fill(txStripe.createTransformedShape(dStripe));
-				}
+				} else {
 
-				if (tobj.getAngleDegrees() <= 45 || tobj.getAngleDegrees() > 315) {
-					imgName.append("a");
-					g2.drawString(tobj.getSymbolID()+"-A",ox-10,25);
-					g2.setPaint(objColor);
-					g2.fill(txStripe.createTransformedShape(aStripe));
-					g2.setPaint(Color.darkGray);
-					g2.fill(txStripe.createTransformedShape(bStripe));
-					g2.fill(txStripe.createTransformedShape(cStripe));
-					g2.fill(txStripe.createTransformedShape(dStripe));
-				}
+					g2.setPaint(Color.white);
 
-				try {
-					String destination = "file:///C:/kollegvision/"+imgName+".jpg";
-					URL url = new URL(destination);
-					BufferedImage c = ImageIO.read(url);
+					StringBuilder imgName = new StringBuilder();
+					imgName.append(tobj.getSymbolID());
+					imgName.append("_");
 
-					AffineTransform tx = AffineTransform.getRotateInstance(tobj.getAngle(), tobj.getX(), tobj.getY());
 
-					AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+					if(tobj.getAngleDegrees() <= 315 && tobj.getAngleDegrees() > 225){
+						imgName.append("d");
+						g2.drawString(tobj.getSymbolID()+"-D",ox-10,25);
+						g2.setPaint(objColor);
+						g2.fill(txStripe.createTransformedShape(aStripe));
+						g2.fill(txStripe.createTransformedShape(bStripe));
+						g2.fill(txStripe.createTransformedShape(cStripe));
+						g2.fill(txStripe.createTransformedShape(dStripe));
+					}
 
-					g2.drawImage(c,Math.round(tobj.getX()*getWidth())-(c.getWidth()/2),Math.round(tobj.getY()*getHeight())-(c.getHeight()/2),null, this);
+					if (tobj.getAngleDegrees() <= 225 && tobj.getAngleDegrees() > 135) {
+						imgName.append("c");
+						g2.drawString(tobj.getSymbolID()+"-C",ox-10,25);
+						g2.setPaint(objColor);
+						g2.fill(txStripe.createTransformedShape(aStripe));
+						g2.fill(txStripe.createTransformedShape(bStripe));
+						g2.fill(txStripe.createTransformedShape(cStripe));
+						g2.setPaint(Color.darkGray);
+						g2.fill(txStripe.createTransformedShape(dStripe));
+					}
 
-				} catch (IOException e) {
-					System.err.println("Bild existiert nicht.");
+					if (tobj.getAngleDegrees() <= 135 && tobj.getAngleDegrees() > 45) {
+						imgName.append("b");
+						g2.drawString(tobj.getSymbolID()+"-B",ox-10,25);
+						g2.setPaint(objColor);
+						g2.fill(txStripe.createTransformedShape(aStripe));
+						g2.fill(txStripe.createTransformedShape(bStripe));
+						g2.setPaint(Color.darkGray);
+						g2.fill(txStripe.createTransformedShape(cStripe));
+						g2.fill(txStripe.createTransformedShape(dStripe));
+					}
+
+					if (tobj.getAngleDegrees() <= 45 || tobj.getAngleDegrees() > 315) {
+						imgName.append("a");
+						g2.drawString(tobj.getSymbolID()+"-A",ox-10,25);
+						g2.setPaint(objColor);
+						g2.fill(txStripe.createTransformedShape(aStripe));
+						g2.setPaint(Color.darkGray);
+						g2.fill(txStripe.createTransformedShape(bStripe));
+						g2.fill(txStripe.createTransformedShape(cStripe));
+						g2.fill(txStripe.createTransformedShape(dStripe));
+					}
+
+					try {
+						String destination = "file:///C:/kollegvision/"+imgName+".png";
+						URL url = new URL(destination);
+						BufferedImage c = ImageIO.read(url);
+
+						AffineTransform tx = AffineTransform.getRotateInstance(tobj.getAngle(), tobj.getX(), tobj.getY());
+
+						AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+
+						g2.drawImage(c,Math.round(tobj.getX()*getWidth())-(c.getWidth()/2),Math.round(tobj.getY()*getHeight())-(c.getHeight()/2),null, this);
+
+					} catch (IOException e) {
+						System.err.println("Bild existiert nicht.");
+					}
+
 				}
 
 			}

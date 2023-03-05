@@ -59,7 +59,7 @@ public class TuioDemo  {
 		frame = new JFrame();
 		frame.add(demo);
 
-		frame.setTitle("TuioDemo");
+		frame.setTitle("KollegVision");
 		frame.setResizable(false);
 
 		frame.addWindowListener( new WindowAdapter() { public void windowClosing(WindowEvent evt) {
